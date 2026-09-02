@@ -1,4 +1,4 @@
-package com.novabank.savings;
+package com.novabank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
