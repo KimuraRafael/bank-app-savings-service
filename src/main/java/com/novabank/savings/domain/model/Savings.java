@@ -1,34 +1,53 @@
 package com.novabank.savings.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Savings {
+public class  Savings {
 
     private String id;
     private String userId;
     private String description;
     private BigDecimal targetAmount;
     private BigDecimal balance;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     Savings(){
     }
 
-    public Savings(String id, String userId, String description, BigDecimal balance, BigDecimal targetAmount, LocalDateTime createAt) {
+    public Savings(String id, String userId, String description, BigDecimal balance, BigDecimal targetAmount, LocalDateTime createdAt) {
+
         this.id = id;
         this.userId = userId;
         this.description = description;
-        this.balance = balance;
+        this.balance =balance;
         this.targetAmount = targetAmount;
-        this.createAt = createAt;
+        this.createdAt = createdAt;
     }
 
-    public static Savings create(String userId, String description, BigDecimal balance, BigDecimal targetAmount, LocalDateTime createAt){
+    public static Savings create(String userId, String description,BigDecimal targetAmount){
 
-        return new Savings(UUID.randomUUID().toString(), userId, description, balance,
-                targetAmount, createAt);
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("User id cannot be empty");
+        }
+
+        if (description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
+
+        if (targetAmount == null || targetAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Target amount must be greater than zero");
+        }
+
+        return new Savings(
+                UUID.randomUUID().toString(),
+                userId,
+                description,
+                BigDecimal.ZERO,
+                targetAmount,
+                LocalDateTime.now());
     }
 
     public String getId() {
@@ -64,10 +83,10 @@ public class Savings {
     }
 
     public LocalDateTime getCreateAt() {
-        return createAt;
+        return createdAt;
     }
 
     public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
+        this.createdAt = createAt;
     }
 }
