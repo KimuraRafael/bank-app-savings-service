@@ -13,17 +13,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
 public class SavingsAdapter implements SavingsRepositoryPort{
 
     private final SavingsRepository jpaRepository;
     private final SavingsOutMapper mapper;
 
+    public SavingsAdapter(
+            SavingsRepository jpaRepository,
+            SavingsOutMapper mapper
+    ) {
+        this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public Savings save(Savings savings) {
 
+        System.out.println("DOMAIN ID: " + savings.getId());
+
         SavingsEntity entity = mapper.toJpa(savings);
+
+        System.out.println("ENTITY ID: " + entity.getId());
 
         SavingsEntity savedEntity = jpaRepository.save(entity);
 
