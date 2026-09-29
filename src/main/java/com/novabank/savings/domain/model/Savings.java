@@ -27,7 +27,7 @@ public class  Savings {
         this.createdAt = createdAt;
     }
 
-    public static Savings create(String userId, String description,BigDecimal targetAmount){
+    public static Savings create(String userId, String description, BigDecimal targetAmount){
 
         if (userId == null || userId.isBlank()) {
             throw new IllegalArgumentException("User id cannot be empty");
@@ -58,6 +58,10 @@ public class  Savings {
         this.id = id;
     }
 
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) {this.userId = userId;}
+
     public String getDescription() {
         return description;
     }
@@ -82,11 +86,11 @@ public class  Savings {
         this.balance = balance;
     }
 
-    public LocalDateTime getCreateAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
+    public void setCreatedAt(LocalDateTime createAt) {
         this.createdAt = createAt;
     }
 }
