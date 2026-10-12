@@ -2,19 +2,24 @@ package com.novabank.savings.application.usecases;
 
 import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.in.CreateSavingsUseCase;
+import com.novabank.savings.domain.ports.in.DeleteSavingsUseCase;
 import com.novabank.savings.domain.ports.in.GetSavingsUseCase;
 import com.novabank.savings.domain.ports.out.SavingsRepositoryPort;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase {
+
+public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, DeleteSavingsUseCase {
 
     private final SavingsRepositoryPort savingsRepositoryPort;
+    private Savings savings;
+
+    public SavingsService(SavingsRepositoryPort savingsRepositoryPort) {
+        this.savingsRepositoryPort = savingsRepositoryPort;
+    }
 
     @Override
     public Savings create(
@@ -35,6 +40,16 @@ public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase {
     public List<Savings> findByUserId(String userId){
         return savingsRepositoryPort.findByUserId(userId);
 
+    }
+
+    @Override
+    public void delete(String savingsId){
+//        if (savings.getBalance().compareTo(BigDecimal.ZERO) > 0) {
+//            throw new IllegalStateException(
+//                    "Cofrinho com valor não pode ser deletado"
+//            );
+//        }
+        savingsRepositoryPort.deleteById(savingsId);
     }
 
 }

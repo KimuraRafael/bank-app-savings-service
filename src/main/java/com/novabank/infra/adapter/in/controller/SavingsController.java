@@ -4,6 +4,7 @@ import com.novabank.infra.adapter.in.dto.CreateSavingsRequest;
 import com.novabank.infra.adapter.in.dto.SavingsResponse;
 import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.in.CreateSavingsUseCase;
+import com.novabank.savings.domain.ports.in.DeleteSavingsUseCase;
 import com.novabank.savings.domain.ports.in.GetSavingsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/savings")
-@RequiredArgsConstructor
 public class SavingsController {
 
     private final CreateSavingsUseCase createSavingsUseCase;
     private final GetSavingsUseCase getSavingsUseCase;
+    private final DeleteSavingsUseCase deleteSavingsUseCase;
+
+    public SavingsController(CreateSavingsUseCase createSavingsUseCase, GetSavingsUseCase getSavingsUseCase, DeleteSavingsUseCase deleteSavingsUseCase) {
+        this.createSavingsUseCase = createSavingsUseCase;
+        this.getSavingsUseCase = getSavingsUseCase;
+        this.deleteSavingsUseCase = deleteSavingsUseCase;
+    }
 
     @PostMapping
     public ResponseEntity<SavingsResponse> create(
@@ -63,5 +70,13 @@ public class SavingsController {
                 .toList();
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{savingsId}")
+    public ResponseEntity<Void> delete(@PathVariable String savingsId){
+
+        deleteSavingsUseCase.delete(savingsId);
+
+        return ResponseEntity.noContent().build();
     }
 }
