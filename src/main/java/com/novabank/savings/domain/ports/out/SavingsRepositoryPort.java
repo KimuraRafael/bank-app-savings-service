@@ -9,10 +9,13 @@ public interface SavingsRepositoryPort {
 
     Savings save(Savings savings);
 
-    Optional<Savings> findById(String id);
-
     List<Savings> findByUserId(String id);
 
+    Optional<Savings> findById(String savingsId);
+
+
     void deleteById(String id);
+
+
 
 }

@@ -2,10 +2,12 @@ package com.novabank.infra.adapter.in.controller;
 
 import com.novabank.infra.adapter.in.dto.CreateSavingsRequest;
 import com.novabank.infra.adapter.in.dto.SavingsResponse;
+import com.novabank.infra.adapter.in.dto.UpdateSavingsRequest;
 import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.in.CreateSavingsUseCase;
 import com.novabank.savings.domain.ports.in.DeleteSavingsUseCase;
 import com.novabank.savings.domain.ports.in.GetSavingsUseCase;
+import com.novabank.savings.domain.ports.in.UpdateSavingsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +22,14 @@ public class SavingsController {
 
     private final CreateSavingsUseCase createSavingsUseCase;
     private final GetSavingsUseCase getSavingsUseCase;
+    private final UpdateSavingsUseCase updateSavingsUseCase;
     private final DeleteSavingsUseCase deleteSavingsUseCase;
 
-    public SavingsController(CreateSavingsUseCase createSavingsUseCase, GetSavingsUseCase getSavingsUseCase, DeleteSavingsUseCase deleteSavingsUseCase) {
+    public SavingsController(CreateSavingsUseCase createSavingsUseCase, GetSavingsUseCase getSavingsUseCase, DeleteSavingsUseCase deleteSavingsUseCase, UpdateSavingsUseCase updateSavingsUseCase) {
         this.createSavingsUseCase = createSavingsUseCase;
         this.getSavingsUseCase = getSavingsUseCase;
         this.deleteSavingsUseCase = deleteSavingsUseCase;
+        this.updateSavingsUseCase = updateSavingsUseCase;
     }
 
     @PostMapping
@@ -70,6 +74,28 @@ public class SavingsController {
                 .toList();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{savingsId}")
+    public ResponseEntity<SavingsResponse> update(@PathVariable String savingsId, @RequestBody UpdateSavingsRequest request){
+
+        Savings savings = updateSavingsUseCase.update(
+                savingsId,
+                request.description(),
+                request.targetAmount()
+        );
+
+        SavingsResponse response = new SavingsResponse(
+                savings.getId(),
+                savings.getUserId(),
+                savings.getDescription(),
+                savings.getTargetAmount(),
+                savings.getBalance(),
+                savings.getCreatedAt()
+        );
+
+        return ResponseEntity.ok(response);
+
     }
 
     @DeleteMapping("/{savingsId}")

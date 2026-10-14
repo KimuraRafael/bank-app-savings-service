@@ -9,6 +9,7 @@ import com.novabank.savings.domain.ports.out.SavingsRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class SavingsAdapter implements SavingsRepositoryPort{
     ) {
         this.jpaRepository = jpaRepository;
         this.mapper = mapper;
+
     }
 
     @Override
@@ -42,9 +44,7 @@ public class SavingsAdapter implements SavingsRepositoryPort{
 
     @Override
     public Optional<Savings> findById(String savingsId){
-
-       return jpaRepository.findById(savingsId).map(mapper::toDomain);
-
+        return jpaRepository.findById(savingsId).map(mapper::toDomain);
     }
 
     @Override
@@ -53,6 +53,8 @@ public class SavingsAdapter implements SavingsRepositoryPort{
                 .map(mapper::toDomain)
                 .toList();
     }
+
+
 
     @Override
     public void deleteById(String savingsId){

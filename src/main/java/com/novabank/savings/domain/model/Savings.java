@@ -32,22 +32,29 @@ public class  Savings {
         if (userId == null || userId.isBlank()) {
             throw new IllegalArgumentException("User id cannot be empty");
         }
+        validateDescription(description);
+        validateTargetAmount(targetAmount);
 
+        return new Savings(UUID.randomUUID().toString(), userId, description, BigDecimal.ZERO, targetAmount, LocalDateTime.now());
+    }
+
+    public void update(String description, BigDecimal targetAmount) {
+        validateDescription(description);
+        validateTargetAmount(targetAmount);
+        this.description = description;
+        this.targetAmount = targetAmount;
+    }
+
+    private static void validateDescription(String description) {
         if (description == null || description.isBlank()) {
             throw new IllegalArgumentException("Description cannot be empty");
         }
+    }
 
+    private static void validateTargetAmount(BigDecimal targetAmount) {
         if (targetAmount == null || targetAmount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Target amount must be greater than zero");
         }
-
-        return new Savings(
-                UUID.randomUUID().toString(),
-                userId,
-                description,
-                BigDecimal.ZERO,
-                targetAmount,
-                LocalDateTime.now());
     }
 
     public String getId() {

@@ -4,6 +4,7 @@ import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.in.CreateSavingsUseCase;
 import com.novabank.savings.domain.ports.in.DeleteSavingsUseCase;
 import com.novabank.savings.domain.ports.in.GetSavingsUseCase;
+import com.novabank.savings.domain.ports.in.UpdateSavingsUseCase;
 import com.novabank.savings.domain.ports.out.SavingsRepositoryPort;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 
-public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, DeleteSavingsUseCase {
+public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, DeleteSavingsUseCase, UpdateSavingsUseCase {
 
     private final SavingsRepositoryPort savingsRepositoryPort;
     private Savings savings;
@@ -40,6 +41,16 @@ public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, 
     public List<Savings> findByUserId(String userId){
         return savingsRepositoryPort.findByUserId(userId);
 
+    }
+
+    @Override
+    public Savings update(String savingsId, String description, BigDecimal targetAmount){
+        Savings savings = savingsRepositoryPort.findById(savingsId)
+                .orElseThrow(() -> new IllegalArgumentException("Savings not found: " + savingsId));
+
+        savings.update(description, targetAmount);
+
+        return savingsRepositoryPort.save(savings);
     }
 
     @Override
