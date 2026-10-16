@@ -1,5 +1,6 @@
 package com.novabank.savings.application.usecases;
 
+import com.novabank.savings.domain.exception.SavingsNotFoundException;
 import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.in.CreateSavingsUseCase;
 import com.novabank.savings.domain.ports.in.DeleteSavingsUseCase;
@@ -46,7 +47,7 @@ public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, 
     @Override
     public Savings update(String savingsId, String description, BigDecimal targetAmount){
         Savings savings = savingsRepositoryPort.findById(savingsId)
-                .orElseThrow(() -> new IllegalArgumentException("Savings not found: " + savingsId));
+                .orElseThrow(() -> new SavingsNotFoundException(savingsId));
 
         savings.update(description, targetAmount);
 
