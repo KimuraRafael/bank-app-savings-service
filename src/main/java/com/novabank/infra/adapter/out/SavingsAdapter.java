@@ -6,10 +6,8 @@ import com.novabank.infra.repository.SavingsRepository;
 import com.novabank.infra.repository.entity.SavingsEntity;
 import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.out.SavingsRepositoryPort;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +28,7 @@ public class SavingsAdapter implements SavingsRepositoryPort{
 
     @Override
     public Savings save(Savings savings) {
-
-        System.out.println("DOMAIN ID: " + savings.getId());
-
         SavingsEntity entity = mapper.toJpa(savings);
-
-        System.out.println("ENTITY ID: " + entity.getId());
 
         SavingsEntity savedEntity = jpaRepository.save(entity);
 

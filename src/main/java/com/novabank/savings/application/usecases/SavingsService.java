@@ -17,7 +17,6 @@ import java.util.List;
 public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, DeleteSavingsUseCase, UpdateSavingsUseCase {
 
     private final SavingsRepositoryPort savingsRepositoryPort;
-    private Savings savings;
 
     public SavingsService(SavingsRepositoryPort savingsRepositoryPort) {
         this.savingsRepositoryPort = savingsRepositoryPort;
