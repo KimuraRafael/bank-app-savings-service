@@ -2,6 +2,7 @@ package com.novabank.infra.adapter.in.exception;
 
 import com.novabank.infra.adapter.in.dto.ErrorResponse;
 import com.novabank.savings.domain.exception.SavingsNotFoundException;
+import com.novabank.savings.domain.exception.SavingsWithBalanceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -33,5 +34,15 @@ public class GlobalExceptionHandler {
             );
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
 
+    }
+
+    @ExceptionHandler(SavingsWithBalanceException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessRule(SavingsWithBalanceException ex){
+        ErrorResponse body = new ErrorResponse(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
     }
 }

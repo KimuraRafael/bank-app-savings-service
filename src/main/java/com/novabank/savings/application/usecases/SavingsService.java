@@ -1,6 +1,7 @@
 package com.novabank.savings.application.usecases;
 
 import com.novabank.savings.domain.exception.SavingsNotFoundException;
+import com.novabank.savings.domain.exception.SavingsWithBalanceException;
 import com.novabank.savings.domain.model.Savings;
 import com.novabank.savings.domain.ports.in.CreateSavingsUseCase;
 import com.novabank.savings.domain.ports.in.DeleteSavingsUseCase;
@@ -55,12 +56,16 @@ public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, 
 
     @Override
     public void delete(String savingsId){
-//        if (savings.getBalance().compareTo(BigDecimal.ZERO) > 0) {
-//            throw new IllegalStateException(
-//                    "Cofrinho com valor não pode ser deletado"
-//            );
-//        }
-        savingsRepositoryPort.deleteById(savingsId);
+
+       Savings savingsExists = savingsRepositoryPort.findById(savingsId)
+               .orElseThrow(() -> new SavingsNotFoundException(savingsId));
+
+       if (savingsExists.getBalance().compareTo(BigDecimal.ZERO) > 0) {
+           throw new SavingsWithBalanceException("Cofrinho com valor não pode ser deletado");
+       }
+
+       savingsRepositoryPort.deleteById(savingsId);
+
     }
 
 }
