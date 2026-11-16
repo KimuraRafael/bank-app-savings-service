@@ -61,7 +61,7 @@ public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, 
                .orElseThrow(() -> new SavingsNotFoundException(savingsId));
 
        if (savingsExists.getBalance().compareTo(BigDecimal.ZERO) > 0) {
-           throw new SavingsWithBalanceException("Cofrinho com valor não pode ser deletado");
+           throw new SavingsWithBalanceException("Savings with balance cannot be deleted: " + savingsId);
        }
 
        savingsRepositoryPort.deleteById(savingsId);

@@ -10,8 +10,8 @@ public class  Savings {
     private String id;
     private String userId;
     private String description;
-    private BigDecimal targetAmount;
     private BigDecimal balance;
+    private BigDecimal targetAmount;
     private LocalDateTime createdAt;
 
     Savings(){
@@ -22,7 +22,7 @@ public class  Savings {
         this.id = id;
         this.userId = userId;
         this.description = description;
-        this.balance =balance;
+        this.balance = balance;
         this.targetAmount = targetAmount;
         this.createdAt = createdAt;
     }
