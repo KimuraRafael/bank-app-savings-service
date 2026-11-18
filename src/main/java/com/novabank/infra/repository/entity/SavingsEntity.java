@@ -33,6 +33,6 @@ public class SavingsEntity {
     @Column(nullable = false)
     private BigDecimal balance;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
 }

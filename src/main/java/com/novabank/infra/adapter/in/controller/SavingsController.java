@@ -31,9 +31,7 @@ public class SavingsController {
     }
 
     @PostMapping
-    public ResponseEntity<SavingsResponse> create(
-            @RequestBody CreateSavingsRequest request
-    ) {
+    public ResponseEntity<SavingsResponse> create(@RequestBody CreateSavingsRequest request) {
 
         Savings savings = createSavingsUseCase.create(
                 request.userId(),

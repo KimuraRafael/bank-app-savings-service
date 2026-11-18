@@ -1,7 +1,6 @@
 package com.novabank.savings.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -97,7 +96,7 @@ public class  Savings {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createAt) {
-        this.createdAt = createAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

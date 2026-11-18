@@ -24,11 +24,7 @@ public class SavingsService implements CreateSavingsUseCase, GetSavingsUseCase, 
     }
 
     @Override
-    public Savings create(
-            String userId,
-            String description,
-            BigDecimal targetAmount) {
-
+    public Savings create(String userId, String description, BigDecimal targetAmount) {
         Savings savings = Savings.create(
                 userId,
                 description,
